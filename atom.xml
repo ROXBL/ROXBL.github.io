@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ROX</title>
+  
+  <subtitle>ROX is ROCS</subtitle>
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2021-06-05T14:40:13.381Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>Rox</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>WELCOME</title>
+    <link href="http://example.com/2021/06/05/welcome/"/>
+    <id>http://example.com/2021/06/05/welcome/</id>
+    <published>2021-06-05T14:00:53.000Z</published>
+    <updated>2021-06-05T14:40:13.381Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;this-is-my-fist-blog-page&quot;&gt;&lt;a href=&quot;#this-is-my-fist-blog-page&quot; class=&quot;headerlink&quot; title=&quot;this is my fist blog page&quot;&gt;&lt;/a&gt;this is my</summary>
+        
+      
+    
+    
+    
+    
+    <category term="说明" scheme="http://example.com/tags/%E8%AF%B4%E6%98%8E/"/>
+    
+  </entry>
+  
+</feed>
