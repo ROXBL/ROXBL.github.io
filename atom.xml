@@ -3,11 +3,11 @@
   <title>ROX</title>
   
   <subtitle>ROX is ROCS</subtitle>
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="https://roxbl.github.io/ROXBL/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
+  <link href="https://roxbl.github.io/ROXBL/"/>
   <updated>2021-06-05T14:40:13.381Z</updated>
-  <id>http://example.com/</id>
+  <id>https://roxbl.github.io/ROXBL/</id>
   
   <author>
     <name>Rox</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>WELCOME</title>
-    <link href="http://example.com/2021/06/05/welcome/"/>
-    <id>http://example.com/2021/06/05/welcome/</id>
+    <link href="https://roxbl.github.io/ROXBL/2021/06/05/welcome/"/>
+    <id>https://roxbl.github.io/ROXBL/2021/06/05/welcome/</id>
     <published>2021-06-05T14:00:53.000Z</published>
     <updated>2021-06-05T14:40:13.381Z</updated>
     
@@ -35,7 +35,7 @@
     
     
     
-    <category term="说明" scheme="http://example.com/tags/%E8%AF%B4%E6%98%8E/"/>
+    <category term="说明" scheme="https://roxbl.github.io/ROXBL/tags/%E8%AF%B4%E6%98%8E/"/>
     
   </entry>
   
