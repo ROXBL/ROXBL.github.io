@@ -4,78 +4,154 @@
   
     
     <entry>
-      <title></title>
-      <link href="2021/06/10/java-zhu-jie-ji-chu-gai-nian-zong-jie/"/>
-      <url>2021/06/10/java-zhu-jie-ji-chu-gai-nian-zong-jie/</url>
+      <title>注解@Retention的作用</title>
+      <link href="2021/06/10/zhu-jie-retention-de-zuo-yong/"/>
+      <url>2021/06/10/zhu-jie-retention-de-zuo-yong/</url>
       
-        <content type="html"><![CDATA[<p>Java注解基础概念总结</p><p>Java注解基础概念总结<br>注解的概念</p><p>注解（Annotation），也叫元数据（Metadata），是Java5的新特性，JDK5引入了Metadata很容易的就能够调用Annotations。注解与类、接口、枚举在同一个层次，并可以应用于包、类型、构造方法、方法、成员变量、参数、本地变量的声明中，用来对这些元素进行说明注释。</p><p>注解的语法与定义形式</p><p>（1）以@interface关键字定义<br>（2）注解包含成员，成员以无参数的方法的形式被声明。其方法名和返回值定义了该成员的名字和类型。<br>（3）成员赋值是通过@Annotation(name=value)的形式。<br>（4）注解需要标明注解的生命周期，注解的修饰目标等信息，这些信息是通过元注解实现。</p><p>以&nbsp;java.lang.annotation 中定义的&nbsp;Target&nbsp;注解来说明：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Retention(value = RetentionPolicy.RUNTIME)</span><br><span class="line">@Target(value = { ElementType.ANNOTATION_TYPE } )</span><br><span class="line">public @interface Target {</span><br><span class="line">    ElementType[] value();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>源码分析如下：<br>第一：元注解@Retention，成员value的值为RetentionPolicy.RUNTIME。<br>第二：元注解@Target，成员value是个数组，用{}形式赋值，值为ElementType.ANNOTATION_TYPE<br>第三：成员名称为value，类型为ElementType[]<br>另外，需要注意一下，如果成员名称是value，在赋值过程中可以简写。如果成员类型为数组，但是只赋值一个元素，则也可以简写。如上面的简写形式为：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Target(ElementType.ANNOTATION_TYPE)</span><br><span class="line">public @interface Target {</span><br><span class="line">    ElementType[] value();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>注解的分类</p><p>注解的分类有两种分法：</p><p>第一种分法</p><p>1、基本内置注解，是指Java自带的几个Annotation，如@Override、@Deprecated、@SuppressWarnings等；</p><p>2、元注解（meta-annotation），是指负责注解其他注解的注解，JDK 1.5及以后版本定义了4个标准的元注解类型，如下：</p><ul><li>@Target</li><li>@Retention</li><li>@Documented</li><li>@Inherited<br>3、自定义注解，根据需要可以自定义注解，自定义注解需要用到上面的meta-annotation</li></ul><p>第二种分法<br>注解需要标明注解的生命周期，这些信息是通过元注解 @Retention&nbsp;实现，注解的值是&nbsp;enum&nbsp;类型的&nbsp;RetentionPolicy，包括以下几种情况：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public enum RetentionPolicy {</span><br><span class="line">    /**</span><br><span class="line">     * 注解只保留在源文件，当Java文件编译成class文件的时候，注解被遗弃.</span><br><span class="line">     * 这意味着：Annotation仅存在于编译器处理期间，编译器处理完之后，该Annotation就没用了</span><br><span class="line">     */</span><br><span class="line">    SOURCE,</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * 注解被保留到class文件，但jvm加载class文件时候被遗弃，这是默认的生命周期.</span><br><span class="line">     */</span><br><span class="line">    CLASS,</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * 注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在，</span><br><span class="line">     * 保存到class对象中，可以通过反射来获取</span><br><span class="line">     */</span><br><span class="line">    RUNTIME</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>元注解</p><p>如上所介绍的Java定义了4个标准的元注解：</p><p>（1）@Target：用于描述注解的使用范围</p><ul><li>可以通过枚举类型ElementType的10个常量对象来指定</li><li>TYPE，METHOD，CONSTRUCTOR，PACKAGE…..</li></ul><p>（2）@Retention：用于描述注解的生命周期</p><ul><li>可以通过枚举类型RetentionPolicy的3个常量对象来指定</li><li>SOURCE（源代码）、CLASS（字节码）、RUNTIME（运行时）</li><li>唯有RUNTIME阶段才能被反射读取到。</li></ul><p>（3）@Documented：表明这个注解应该被 javadoc工具记录。</p><p>（4）@Inherited：允许子类继承父类中的注解</p><hr><p>原文链接：<a href="https://blog.csdn.net/github_35180164/article/details/52107204">https://blog.csdn.net/github_35180164/article/details/52107204</a></p>]]></content>
+        <content type="html"><![CDATA[<p>注解@Retention的作用<br>注解@Retention可以用来修饰注解，是注解的注解，称为元注解。<br>Retention注解有一个属性value，是RetentionPolicy类型的，Enum RetentionPolicy是一个枚举类型，<br>这个枚举决定了Retention注解应该如何去保持，也可理解为Rentention 搭配 RententionPolicy使用。RetentionPolicy有3个值：CLASS  RUNTIME   SOURCE<br>按生命周期来划分可分为3类：<br>1、RetentionPolicy.SOURCE：注解只保留在源文件，当Java文件编译成class文件的时候，注解被遗弃；<br>2、RetentionPolicy.CLASS：注解被保留到class文件，但jvm加载class文件时候被遗弃，这是默认的生命周期；<br>3、RetentionPolicy.RUNTIME：注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在；<br>这3个生命周期分别对应于：Java源文件(.java文件) —&gt; .class文件 —&gt; 内存中的字节码。<br>那怎么来选择合适的注解生命周期呢？<br>首先要明确生命周期长度 SOURCE &lt; CLASS &lt; RUNTIME ，所以前者能作用的地方后者一定也能作用。<br>一般如果需要在运行时去动态获取注解信息，那只能用 RUNTIME 注解，比如@Deprecated使用RUNTIME注解<br>如果要在编译时进行一些预处理操作，比如生成一些辅助代码（如 ButterKnife），就用 CLASS注解；<br>如果只是做一些检查性的操作，比如 @Override 和 @SuppressWarnings，使用SOURCE 注解。</p><p>注解@Override用在方法上，当我们想重写一个方法时，在方法上加@Override，当我们方法的名字出错时，编译器就会报错<br>注解@Deprecated，用来表示某个类或属性或方法已经过时，不想别人再用时，在属性和方法上用@Deprecated修饰<br>注解@SuppressWarnings用来压制程序中出来的警告，比如在没有用泛型或是方法已经过时的时候</p><p>转自：<br><a href="http://blog.csdn.net/liuwenbo0920/article/details/7290586">http://blog.csdn.net/liuwenbo0920/article/details/7290586</a><br><a href="http://blog.csdn.net/github_35180164/article/details/52118286">http://blog.csdn.net/github_35180164/article/details/52118286</a><br>英文好的可以阅读以下源码：</p><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">package java.lang.annotation;</span><br><span class="line"> </span><br><span class="line">/**</span><br><span class="line"> * Annotation retention policy.  The constants of this enumerated type</span><br><span class="line"> * describe the various policies for retaining annotations.  They are used</span><br><span class="line"> * in conjunction with the {@link Retention} meta-annotation type to specify</span><br><span class="line"> * how long annotations are to be retained.</span><br><span class="line"> *</span><br><span class="line"> * @author  Joshua Bloch</span><br><span class="line"> * @since 1.5</span><br><span class="line"> */</span><br><span class="line">public enum RetentionPolicy {</span><br><span class="line">    /**</span><br><span class="line">     * Annotations are to be discarded by the compiler.</span><br><span class="line">     */</span><br><span class="line">    SOURCE,</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * Annotations are to be recorded in the class file by the compiler</span><br><span class="line">     * but need not be retained by the VM at run time.  This is the default</span><br><span class="line">     * behavior.</span><br><span class="line">     */</span><br><span class="line">    CLASS,</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * Annotations are to be recorded in the class file by the compiler and</span><br><span class="line">     * retained by the VM at run time, so they may be read reflectively.</span><br><span class="line">     *</span><br><span class="line">     * @see java.lang.reflect.AnnotatedElement</span><br><span class="line">     */</span><br><span class="line">    RUNTIME</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>原文链接：<br><a href="https://blog.csdn.net/u010002184/article/details/79166478">https://blog.csdn.net/u010002184/article/details/79166478</a></p>]]></content>
       
       
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JAVA </tag>
+            
+            <tag> 注解 </tag>
+            
+        </tags>
       
     </entry>
     
     
     
     <entry>
-      <title></title>
-      <link href="2021/06/10/java-ri-chang-wen-ti-da-an/"/>
-      <url>2021/06/10/java-ri-chang-wen-ti-da-an/</url>
+      <title>浅析Java中dto、dao、service、controller的四层结构</title>
+      <link href="2021/06/10/qian-xi-java-zhong-dto-dao-service-controller-de-si-ceng-jie-gou/"/>
+      <url>2021/06/10/qian-xi-java-zhong-dto-dao-service-controller-de-si-ceng-jie-gou/</url>
+      
+        <content type="html"><![CDATA[<h1 id="浅析Java中dto、dao、service、controller的四层结构"><a href="#浅析Java中dto、dao、service、controller的四层结构" class="headerlink" title="浅析Java中dto、dao、service、controller的四层结构"></a>浅析Java中dto、dao、service、controller的四层结构</h1><p>目前我所在的项目组采用的是SpringBoot框架，前端使用BootStrap+jQuery。</p><p>SpringBoot是BS开发框架之一，不用单独开启tomcat服务器，目前比较流行，一般开发大型项目时会将所有的功能细分为许多小模块，每个模块都有dto、dao、service和controlleer层，有些模块还会加入validate层。</p><p>先给大家看个小模块的目录结构。</p><p>首先，最底层的就是dto层，dto层就是所谓的model，dto中定义的是实体类，也就是.class文件，该文件中包含实体类的属性和对应属性的get、set方法；</p><p>其次，是dao层（dao层的文件习惯以*Mapper命名），dao层会调用dto层，dao层中会定义实际使用到的方法，比如增删改查。一般在dao层下还会有个叫做sqlmap的包，该包下有xml文件，文件内容正是根据之前定义的方法而写的SQL语句；</p><p>之后，到了service层，service层会调用dao层和dto层，service层也会对数据进行一定的处理，比如条件判断和数据筛选等等；</p><p>最后，是controller层，controller层会调用前面三层，controller层一般会和前台的js文件进行数据的交互， controller层是前台数据的接收器，后台处理好的数据也是通过controller层传递到前台显示的</p><p>原文链接：<a href="https://blog.csdn.net/wyx0224/article/details/81190792">https://blog.csdn.net/wyx0224/article/details/81190792</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JAVA </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Java注解基础概念总结</title>
+      <link href="2021/06/09/mvc-mo-shi-zhong-guan-yu-dto-ceng-de-jian-dan-shi-yong/"/>
+      <url>2021/06/09/mvc-mo-shi-zhong-guan-yu-dto-ceng-de-jian-dan-shi-yong/</url>
+      
+        <content type="html"><![CDATA[<p>mvc模式中关于DTO层的简单使用</p><ol><li>概念：<br>DTO：Data Transfer Object，数据传输对象，起到数据封装与隔离的作用</li><li>应用介绍：<br>在实际项目中，DTO的分在两层传输，一层是service层向controller层，这一层的DTO封装service执行结果，给controller，简化业务数据，只提取部分业务相关字段或补充处理相关字段，不同业务可能有不同的此类dto，具有业务相关性；</li></ol><p>另外一层是controller层向web前端层，这一层DTO封装controller执行结果，返回给前端web，请求返回实体封装类，适用于所有ajax请求返回的类型实体，无业务相关性</p><p>实际上，第一层DTO通常会被封装进第二次DTO中，在接口调用如RPC调用中，订阅者只需要拿到简化的业务数据对象，而不用把整个实体bean给对方。<br>3. 实例：<br>service层向controller层dto：<br>例如执行秒杀业务，执行结果通常包含状态码、状态信息、执行业务id以及成功的明细数据，把分散的数据进行封装返回给controller</p><p>DTO实体类：</p><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">public class SeckillExecution {</span><br><span class="line">    private long seckillId;</span><br><span class="line"></span><br><span class="line">    //秒杀执行状态code</span><br><span class="line">    private int state;</span><br><span class="line"></span><br><span class="line">    //秒杀执行状态信息</span><br><span class="line">    private String stateInfo;</span><br><span class="line">    //不直接使用枚举来定义成员变量属性，因为传输对象以json格式给前台，默认情况下无法处理枚举类型数据</span><br><span class="line">    //private SeckillStateEnum seckillStateEnum</span><br><span class="line"></span><br><span class="line">    //秒杀成功，返回的购买明细实体</span><br><span class="line">    private SuccessKilled successKilled;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 秒杀执行成功初始化</span><br><span class="line">     * @param seckillId</span><br><span class="line">     * @param seckillStateEnum 封装状态信息的枚举常量</span><br><span class="line">     * @param successKilled</span><br><span class="line">     */</span><br><span class="line">    public SeckillExecution(long seckillId, SeckillStateEnum seckillStateEnum,SuccessKilled successKilled) {</span><br><span class="line">        super();</span><br><span class="line">        this.seckillId = seckillId;</span><br><span class="line">        this.state = seckillStateEnum.getStateCode();</span><br><span class="line">        this.stateInfo = seckillStateEnum.getStateInfo();</span><br><span class="line">        this.successKilled = successKilled;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 秒杀执行失败的初始化</span><br><span class="line">     * @param seckillId</span><br><span class="line">     * @param seckillStateEnum 封装状态信息的枚举常量</span><br><span class="line">     */</span><br><span class="line">    public SeckillExecution(long seckillId, SeckillStateEnum seckillStateEnum) {</span><br><span class="line">        super();</span><br><span class="line">        this.seckillId = seckillId;</span><br><span class="line">        this.state = seckillStateEnum.getStateCode();</span><br><span class="line">        this.stateInfo = seckillStateEnum.getStateInfo();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    setter()</span><br><span class="line">    getter()</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>service直接返回DTO对象：</p><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">public SeckillExecution executeSeckill(。。。){</span><br><span class="line">    。。。</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>而实际的业务对象是这样的：</p><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">public class Seckill {</span><br><span class="line">    private long seckillId;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    private int number;</span><br><span class="line"></span><br><span class="line">    private Date startTime;</span><br><span class="line"></span><br><span class="line">    private Date endTime;</span><br><span class="line"></span><br><span class="line">    private Date createTime;</span><br><span class="line"></span><br><span class="line">    setter()</span><br><span class="line">    getter()</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>注：在RPC接口调用过程中，把DTO及接口提供给订阅者，而不用冗余的业务实体。</p><p>controller层向web前端层dto：</p><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">public class SeckillResult&lt;T&gt; {</span><br><span class="line">    private static final long serialVersionUID = 1L;</span><br><span class="line"></span><br><span class="line">    //注意boolean类型的getter方法，不是以get开头，而是以is开头，会影响数据封装，需手动修改</span><br><span class="line">    private boolean success;</span><br><span class="line"></span><br><span class="line">    //返回给前台的实体数据或者字符串</span><br><span class="line">    private T data;</span><br><span class="line"></span><br><span class="line">    //异常信息</span><br><span class="line">    private String error;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 数据获取失败的情况</span><br><span class="line">     * @param success</span><br><span class="line">     * @param error</span><br><span class="line">     */</span><br><span class="line">    public SeckillResult(boolean success, String error) {</span><br><span class="line">        super();</span><br><span class="line">        this.success = success;</span><br><span class="line">        this.error = error;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 数据获取成功，封装数据实体</span><br><span class="line">     * @param success</span><br><span class="line">     * @param data</span><br><span class="line">     * @param error</span><br><span class="line">     */</span><br><span class="line">    public SeckillResult(boolean success, T data) {</span><br><span class="line">        super();</span><br><span class="line">        this.success = success;</span><br><span class="line">        this.data = data;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    setter()</span><br><span class="line">    getter()    </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>原文链接：<a href="https://blog.csdn.net/javaloveiphone/article/details/52606688">https://blog.csdn.net/javaloveiphone/article/details/52606688</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JAVA </tag>
+            
+            <tag> MVC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Spring日常问题与答案</title>
+      <link href="2021/06/08/spring-ri-chang-wen-ti-yu-da-an/"/>
+      <url>2021/06/08/spring-ri-chang-wen-ti-yu-da-an/</url>
+      
+        <content type="html"><![CDATA[<p>Spring日常问题与答案</p><p>@Accessors</p><p>@lombok</p><p>@NotBlank</p><p>@Slf4j ：log日志输出，基于spring框架，或idea使用Lombok</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Spring </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Java注解基础概念总结</title>
+      <link href="2021/06/07/java-zhu-jie-ji-chu-gai-nian-zong-jie/"/>
+      <url>2021/06/07/java-zhu-jie-ji-chu-gai-nian-zong-jie/</url>
+      
+        <content type="html"><![CDATA[<p>Java注解基础概念总结<br>注解的概念</p><p>注解（Annotation），也叫元数据（Metadata），是Java5的新特性，JDK5引入了Metadata很容易的就能够调用Annotations。注解与类、接口、枚举在同一个层次，并可以应用于包、类型、构造方法、方法、成员变量、参数、本地变量的声明中，用来对这些元素进行说明注释。</p><p>注解的语法与定义形式</p><p>（1）以@interface关键字定义<br>（2）注解包含成员，成员以无参数的方法的形式被声明。其方法名和返回值定义了该成员的名字和类型。<br>（3）成员赋值是通过@Annotation(name=value)的形式。<br>（4）注解需要标明注解的生命周期，注解的修饰目标等信息，这些信息是通过元注解实现。</p><p>以&nbsp;java.lang.annotation 中定义的&nbsp;Target&nbsp;注解来说明：</p><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">@Retention(value = RetentionPolicy.RUNTIME)</span><br><span class="line">@Target(value = { ElementType.ANNOTATION_TYPE } )</span><br><span class="line">public @interface Target {</span><br><span class="line">    ElementType[] value();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>源码分析如下：<br>第一：元注解@Retention，成员value的值为RetentionPolicy.RUNTIME。<br>第二：元注解@Target，成员value是个数组，用{}形式赋值，值为ElementType.ANNOTATION_TYPE<br>第三：成员名称为value，类型为ElementType[]<br>另外，需要注意一下，如果成员名称是value，在赋值过程中可以简写。如果成员类型为数组，但是只赋值一个元素，则也可以简写。如上面的简写形式为：</p><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Target(ElementType.ANNOTATION_TYPE)</span><br><span class="line">public @interface Target {</span><br><span class="line">    ElementType[] value();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>注解的分类</p><p>注解的分类有两种分法：</p><p>第一种分法</p><p>1、基本内置注解，是指Java自带的几个Annotation，如@Override、@Deprecated、@SuppressWarnings等；</p><p>2、元注解（meta-annotation），是指负责注解其他注解的注解，JDK 1.5及以后版本定义了4个标准的元注解类型，如下：</p><ul><li>@Target</li><li>@Retention</li><li>@Documented</li><li>@Inherited<br>3、自定义注解，根据需要可以自定义注解，自定义注解需要用到上面的meta-annotation</li></ul><p>第二种分法<br>注解需要标明注解的生命周期，这些信息是通过元注解 @Retention&nbsp;实现，注解的值是&nbsp;enum&nbsp;类型的&nbsp;RetentionPolicy，包括以下几种情况：</p><figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">public enum RetentionPolicy {</span><br><span class="line">    /**</span><br><span class="line">     * 注解只保留在源文件，当Java文件编译成class文件的时候，注解被遗弃.</span><br><span class="line">     * 这意味着：Annotation仅存在于编译器处理期间，编译器处理完之后，该Annotation就没用了</span><br><span class="line">     */</span><br><span class="line">    SOURCE,</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * 注解被保留到class文件，但jvm加载class文件时候被遗弃，这是默认的生命周期.</span><br><span class="line">     */</span><br><span class="line">    CLASS,</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * 注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在，</span><br><span class="line">     * 保存到class对象中，可以通过反射来获取</span><br><span class="line">     */</span><br><span class="line">    RUNTIME</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>元注解</p><p>如上所介绍的Java定义了4个标准的元注解：</p><p>（1）@Target：用于描述注解的使用范围</p><ul><li>可以通过枚举类型ElementType的10个常量对象来指定</li><li>TYPE，METHOD，CONSTRUCTOR，PACKAGE…..</li></ul><p>（2）@Retention：用于描述注解的生命周期</p><ul><li>可以通过枚举类型RetentionPolicy的3个常量对象来指定</li><li>SOURCE（源代码）、CLASS（字节码）、RUNTIME（运行时）</li><li>唯有RUNTIME阶段才能被反射读取到。</li></ul><p>（3）@Documented：表明这个注解应该被 javadoc工具记录。</p><p>（4）@Inherited：允许子类继承父类中的注解</p><hr><p>原文链接：<a href="https://blog.csdn.net/github_35180164/article/details/52107204">https://blog.csdn.net/github_35180164/article/details/52107204</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 注解 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>JAVA日常问题答案</title>
+      <link href="2021/06/06/java-ri-chang-wen-ti-da-an/"/>
+      <url>2021/06/06/java-ri-chang-wen-ti-da-an/</url>
       
         <content type="html"><![CDATA[<p>JAVA日常问题答案</p><p>trim()：</p><p>删除字符串首尾空白</p><p>sequence什么意思：序列</p><p>Arrays.copyOf（）：</p><p>返回拷贝的数组，传入两个参数，第一个参数是需要拷贝的数组，第二个是数组下标（返回拷贝下标之前的数）</p><p>buffer.getValue()</p><p>java Scanner：主要做文本扫描，例如配合System.in可以做文本输入</p><p>String buffer 和 String builder的区别与线程</p><p><a href="https://www.runoob.com/w3cnote/java-different-of-string-stringbuffer-stringbuilder.html">https://www.runoob.com/w3cnote/java-different-of-string-stringbuffer-stringbuilder.html</a></p>]]></content>
       
       
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="2021/06/10/spring-ri-chang-wen-ti-yu-da-an/"/>
-      <url>2021/06/10/spring-ri-chang-wen-ti-yu-da-an/</url>
-      
-        <content type="html"><![CDATA[<p>Spring日常问题与答案</p><p>Spring日常问题与答案</p><p>@Accessors</p><p>@lombok</p><p>@NotBlank</p><p>@Slf4j ：log日志输出，基于spring框架，或idea使用Lombok</p>]]></content>
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
       
       
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="2021/06/10/mvc-mo-shi-zhong-guan-yu-dto-ceng-de-jian-dan-shi-yong/"/>
-      <url>2021/06/10/mvc-mo-shi-zhong-guan-yu-dto-ceng-de-jian-dan-shi-yong/</url>
-      
-        <content type="html"><![CDATA[<p>mvc模式中关于DTO层的简单使用</p><p>mvc模式中关于DTO层的简单使用</p><ol><li>概念：<br>DTO：Data Transfer Object，数据传输对象，起到数据封装与隔离的作用</li><li>应用介绍：<br>在实际项目中，DTO的分在两层传输，一层是service层向controller层，这一层的DTO封装service执行结果，给controller，简化业务数据，只提取部分业务相关字段或补充处理相关字段，不同业务可能有不同的此类dto，具有业务相关性；</li></ol><p>另外一层是controller层向web前端层，这一层DTO封装controller执行结果，返回给前端web，请求返回实体封装类，适用于所有ajax请求返回的类型实体，无业务相关性</p><p>实际上，第一层DTO通常会被封装进第二次DTO中，在接口调用如RPC调用中，订阅者只需要拿到简化的业务数据对象，而不用把整个实体bean给对方。<br>3. 实例：<br>service层向controller层dto：<br>例如执行秒杀业务，执行结果通常包含状态码、状态信息、执行业务id以及成功的明细数据，把分散的数据进行封装返回给controller</p><p>DTO实体类：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">public class SeckillExecution {</span><br><span class="line">    private long seckillId;</span><br><span class="line"></span><br><span class="line">    //秒杀执行状态code</span><br><span class="line">    private int state;</span><br><span class="line"></span><br><span class="line">    //秒杀执行状态信息</span><br><span class="line">    private String stateInfo;</span><br><span class="line">    //不直接使用枚举来定义成员变量属性，因为传输对象以json格式给前台，默认情况下无法处理枚举类型数据</span><br><span class="line">    //private SeckillStateEnum seckillStateEnum</span><br><span class="line"></span><br><span class="line">    //秒杀成功，返回的购买明细实体</span><br><span class="line">    private SuccessKilled successKilled;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 秒杀执行成功初始化</span><br><span class="line">     * @param seckillId</span><br><span class="line">     * @param seckillStateEnum 封装状态信息的枚举常量</span><br><span class="line">     * @param successKilled</span><br><span class="line">     */</span><br><span class="line">    public SeckillExecution(long seckillId, SeckillStateEnum seckillStateEnum,SuccessKilled successKilled) {</span><br><span class="line">        super();</span><br><span class="line">        this.seckillId = seckillId;</span><br><span class="line">        this.state = seckillStateEnum.getStateCode();</span><br><span class="line">        this.stateInfo = seckillStateEnum.getStateInfo();</span><br><span class="line">        this.successKilled = successKilled;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 秒杀执行失败的初始化</span><br><span class="line">     * @param seckillId</span><br><span class="line">     * @param seckillStateEnum 封装状态信息的枚举常量</span><br><span class="line">     */</span><br><span class="line">    public SeckillExecution(long seckillId, SeckillStateEnum seckillStateEnum) {</span><br><span class="line">        super();</span><br><span class="line">        this.seckillId = seckillId;</span><br><span class="line">        this.state = seckillStateEnum.getStateCode();</span><br><span class="line">        this.stateInfo = seckillStateEnum.getStateInfo();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    setter()</span><br><span class="line">    getter()</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>service直接返回DTO对象：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public SeckillExecution executeSeckill(。。。){</span><br><span class="line">    。。。</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>而实际的业务对象是这样的：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class Seckill {</span><br><span class="line">    private long seckillId;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    private int number;</span><br><span class="line"></span><br><span class="line">    private Date startTime;</span><br><span class="line"></span><br><span class="line">    private Date endTime;</span><br><span class="line"></span><br><span class="line">    private Date createTime;</span><br><span class="line"></span><br><span class="line">    setter()</span><br><span class="line">    getter()</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>注：在RPC接口调用过程中，把DTO及接口提供给订阅者，而不用冗余的业务实体。</p><p>controller层向web前端层dto：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class SeckillResult&lt;T&gt; {</span><br><span class="line">    private static final long serialVersionUID = 1L;</span><br><span class="line"></span><br><span class="line">    //注意boolean类型的getter方法，不是以get开头，而是以is开头，会影响数据封装，需手动修改</span><br><span class="line">    private boolean success;</span><br><span class="line"></span><br><span class="line">    //返回给前台的实体数据或者字符串</span><br><span class="line">    private T data;</span><br><span class="line"></span><br><span class="line">    //异常信息</span><br><span class="line">    private String error;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 数据获取失败的情况</span><br><span class="line">     * @param success</span><br><span class="line">     * @param error</span><br><span class="line">     */</span><br><span class="line">    public SeckillResult(boolean success, String error) {</span><br><span class="line">        super();</span><br><span class="line">        this.success = success;</span><br><span class="line">        this.error = error;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 数据获取成功，封装数据实体</span><br><span class="line">     * @param success</span><br><span class="line">     * @param data</span><br><span class="line">     * @param error</span><br><span class="line">     */</span><br><span class="line">    public SeckillResult(boolean success, T data) {</span><br><span class="line">        super();</span><br><span class="line">        this.success = success;</span><br><span class="line">        this.data = data;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    setter()</span><br><span class="line">    getter()    </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>原文链接：<a href="https://blog.csdn.net/javaloveiphone/article/details/52606688">https://blog.csdn.net/javaloveiphone/article/details/52606688</a></p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="2021/06/10/qian-xi-java-zhong-dto-dao-service-controller-de-si-ceng-jie-gou/"/>
-      <url>2021/06/10/qian-xi-java-zhong-dto-dao-service-controller-de-si-ceng-jie-gou/</url>
-      
-        <content type="html"><![CDATA[<p>浅析Java中dto、dao、service、controller的四层结构</p><h1 id="浅析Java中dto、dao、service、controller的四层结构"><a href="#浅析Java中dto、dao、service、controller的四层结构" class="headerlink" title="浅析Java中dto、dao、service、controller的四层结构"></a>浅析Java中dto、dao、service、controller的四层结构</h1><p>目前我所在的项目组采用的是SpringBoot框架，前端使用BootStrap+jQuery。</p><p>SpringBoot是BS开发框架之一，不用单独开启tomcat服务器，目前比较流行，一般开发大型项目时会将所有的功能细分为许多小模块，每个模块都有dto、dao、service和controlleer层，有些模块还会加入validate层。</p><p>先给大家看个小模块的目录结构。</p><p>首先，最底层的就是dto层，dto层就是所谓的model，dto中定义的是实体类，也就是.class文件，该文件中包含实体类的属性和对应属性的get、set方法；</p><p>其次，是dao层（dao层的文件习惯以*Mapper命名），dao层会调用dto层，dao层中会定义实际使用到的方法，比如增删改查。一般在dao层下还会有个叫做sqlmap的包，该包下有xml文件，文件内容正是根据之前定义的方法而写的SQL语句；</p><p>之后，到了service层，service层会调用dao层和dto层，service层也会对数据进行一定的处理，比如条件判断和数据筛选等等；</p><p>最后，是controller层，controller层会调用前面三层，controller层一般会和前台的js文件进行数据的交互， controller层是前台数据的接收器，后台处理好的数据也是通过controller层传递到前台显示的</p><p>原文链接：<a href="https://blog.csdn.net/wyx0224/article/details/81190792">https://blog.csdn.net/wyx0224/article/details/81190792</a></p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="2021/06/10/zhu-jie-retention-de-zuo-yong/"/>
-      <url>2021/06/10/zhu-jie-retention-de-zuo-yong/</url>
-      
-        <content type="html"><![CDATA[<p>注解@Retention的作用</p><p>注解@Retention的作用<br>注解@Retention可以用来修饰注解，是注解的注解，称为元注解。<br>Retention注解有一个属性value，是RetentionPolicy类型的，Enum RetentionPolicy是一个枚举类型，<br>这个枚举决定了Retention注解应该如何去保持，也可理解为Rentention 搭配 RententionPolicy使用。RetentionPolicy有3个值：CLASS  RUNTIME   SOURCE<br>按生命周期来划分可分为3类：<br>1、RetentionPolicy.SOURCE：注解只保留在源文件，当Java文件编译成class文件的时候，注解被遗弃；<br>2、RetentionPolicy.CLASS：注解被保留到class文件，但jvm加载class文件时候被遗弃，这是默认的生命周期；<br>3、RetentionPolicy.RUNTIME：注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在；<br>这3个生命周期分别对应于：Java源文件(.java文件) —&gt; .class文件 —&gt; 内存中的字节码。<br>那怎么来选择合适的注解生命周期呢？<br>首先要明确生命周期长度 SOURCE &lt; CLASS &lt; RUNTIME ，所以前者能作用的地方后者一定也能作用。<br>一般如果需要在运行时去动态获取注解信息，那只能用 RUNTIME 注解，比如@Deprecated使用RUNTIME注解<br>如果要在编译时进行一些预处理操作，比如生成一些辅助代码（如 ButterKnife），就用 CLASS注解；<br>如果只是做一些检查性的操作，比如 @Override 和 @SuppressWarnings，使用SOURCE 注解。</p><p>注解@Override用在方法上，当我们想重写一个方法时，在方法上加@Override，当我们方法的名字出错时，编译器就会报错<br>注解@Deprecated，用来表示某个类或属性或方法已经过时，不想别人再用时，在属性和方法上用@Deprecated修饰<br>注解@SuppressWarnings用来压制程序中出来的警告，比如在没有用泛型或是方法已经过时的时候</p><p>转自：<br><a href="http://blog.csdn.net/liuwenbo0920/article/details/7290586">http://blog.csdn.net/liuwenbo0920/article/details/7290586</a><br><a href="http://blog.csdn.net/github_35180164/article/details/52118286">http://blog.csdn.net/github_35180164/article/details/52118286</a><br>英文好的可以阅读以下源码：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package java.lang.annotation;</span><br><span class="line"> </span><br><span class="line">/**</span><br><span class="line"> * Annotation retention policy.  The constants of this enumerated type</span><br><span class="line"> * describe the various policies for retaining annotations.  They are used</span><br><span class="line"> * in conjunction with the {@link Retention} meta-annotation type to specify</span><br><span class="line"> * how long annotations are to be retained.</span><br><span class="line"> *</span><br><span class="line"> * @author  Joshua Bloch</span><br><span class="line"> * @since 1.5</span><br><span class="line"> */</span><br><span class="line">public enum RetentionPolicy {</span><br><span class="line">    /**</span><br><span class="line">     * Annotations are to be discarded by the compiler.</span><br><span class="line">     */</span><br><span class="line">    SOURCE,</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * Annotations are to be recorded in the class file by the compiler</span><br><span class="line">     * but need not be retained by the VM at run time.  This is the default</span><br><span class="line">     * behavior.</span><br><span class="line">     */</span><br><span class="line">    CLASS,</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * Annotations are to be recorded in the class file by the compiler and</span><br><span class="line">     * retained by the VM at run time, so they may be read reflectively.</span><br><span class="line">     *</span><br><span class="line">     * @see java.lang.reflect.AnnotatedElement</span><br><span class="line">     */</span><br><span class="line">    RUNTIME</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p>原文链接：<br><a href="https://blog.csdn.net/u010002184/article/details/79166478">https://blog.csdn.net/u010002184/article/details/79166478</a></p>]]></content>
-      
-      
+        <tags>
+            
+            <tag> JAVA </tag>
+            
+        </tags>
       
     </entry>
     

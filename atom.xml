@@ -6,7 +6,7 @@
   <link href="https://roxbl.github.io/atom.xml" rel="self"/>
   
   <link href="https://roxbl.github.io/"/>
-  <updated>2021-06-10T12:04:42.000Z</updated>
+  <updated>2021-06-10T13:37:23.454Z</updated>
   <id>https://roxbl.github.io/</id>
   
   <author>
@@ -17,34 +17,147 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="https://roxbl.github.io/2021/06/10/java-zhu-jie-ji-chu-gai-nian-zong-jie/"/>
-    <id>https://roxbl.github.io/2021/06/10/java-zhu-jie-ji-chu-gai-nian-zong-jie/</id>
-    <published>2021-06-10T12:04:40.000Z</published>
-    <updated>2021-06-10T12:04:42.000Z</updated>
+    <title>注解@Retention的作用</title>
+    <link href="https://roxbl.github.io/2021/06/10/zhu-jie-retention-de-zuo-yong/"/>
+    <id>https://roxbl.github.io/2021/06/10/zhu-jie-retention-de-zuo-yong/</id>
+    <published>2021-06-09T16:00:00.000Z</published>
+    <updated>2021-06-10T13:37:23.454Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;Java注解基础概念总结&lt;/p&gt;
-&lt;p&gt;Java注解基础概念总结&lt;br&gt;注解的概念&lt;/p&gt;
-&lt;p&gt;注解（Annotation），也叫元数据（Metadata），是Java5的新特性，JDK5引入了Metadata很容易的就能够调用Annotations。注解与类、接口、枚举</summary>
+    <summary type="html">&lt;p&gt;注解@Retention的作用&lt;br&gt;注解@Retention可以用来修饰注解，是注解的注解，称为元注解。&lt;br&gt;Retention注解有一个属性value，是RetentionPolicy类型的，Enum</summary>
         
       
     
     
     
+    <category term="技术" scheme="https://roxbl.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="JAVA" scheme="https://roxbl.github.io/tags/JAVA/"/>
+    
+    <category term="注解" scheme="https://roxbl.github.io/tags/%E6%B3%A8%E8%A7%A3/"/>
     
   </entry>
   
   <entry>
-    <title></title>
-    <link href="https://roxbl.github.io/2021/06/10/java-ri-chang-wen-ti-da-an/"/>
-    <id>https://roxbl.github.io/2021/06/10/java-ri-chang-wen-ti-da-an/</id>
-    <published>2021-06-10T12:04:39.000Z</published>
-    <updated>2021-06-10T12:04:40.000Z</updated>
+    <title>浅析Java中dto、dao、service、controller的四层结构</title>
+    <link href="https://roxbl.github.io/2021/06/10/qian-xi-java-zhong-dto-dao-service-controller-de-si-ceng-jie-gou/"/>
+    <id>https://roxbl.github.io/2021/06/10/qian-xi-java-zhong-dto-dao-service-controller-de-si-ceng-jie-gou/</id>
+    <published>2021-06-09T16:00:00.000Z</published>
+    <updated>2021-06-10T13:31:31.947Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;浅析Java中dto、dao、service、controller的四层结构&quot;&gt;&lt;a href=&quot;#浅析Java中dto、dao、service、controller的四层结构&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="技术" scheme="https://roxbl.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="JAVA" scheme="https://roxbl.github.io/tags/JAVA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java注解基础概念总结</title>
+    <link href="https://roxbl.github.io/2021/06/09/mvc-mo-shi-zhong-guan-yu-dto-ceng-de-jian-dan-shi-yong/"/>
+    <id>https://roxbl.github.io/2021/06/09/mvc-mo-shi-zhong-guan-yu-dto-ceng-de-jian-dan-shi-yong/</id>
+    <published>2021-06-08T16:00:00.000Z</published>
+    <updated>2021-06-10T13:32:30.446Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;mvc模式中关于DTO层的简单使用&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;概念：&lt;br&gt;DTO：Data Transfer</summary>
+        
+      
+    
+    
+    
+    <category term="技术" scheme="https://roxbl.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="JAVA" scheme="https://roxbl.github.io/tags/JAVA/"/>
+    
+    <category term="MVC" scheme="https://roxbl.github.io/tags/MVC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring日常问题与答案</title>
+    <link href="https://roxbl.github.io/2021/06/08/spring-ri-chang-wen-ti-yu-da-an/"/>
+    <id>https://roxbl.github.io/2021/06/08/spring-ri-chang-wen-ti-yu-da-an/</id>
+    <published>2021-06-07T16:00:00.000Z</published>
+    <updated>2021-06-10T13:24:23.280Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Spring日常问题与答案&lt;/p&gt;
+&lt;p&gt;@Accessors&lt;/p&gt;
+&lt;p&gt;@lombok&lt;/p&gt;
+&lt;p&gt;@NotBlank&lt;/p&gt;
+&lt;p&gt;@Slf4j</summary>
+        
+      
+    
+    
+    
+    <category term="技术" scheme="https://roxbl.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Spring" scheme="https://roxbl.github.io/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java注解基础概念总结</title>
+    <link href="https://roxbl.github.io/2021/06/07/java-zhu-jie-ji-chu-gai-nian-zong-jie/"/>
+    <id>https://roxbl.github.io/2021/06/07/java-zhu-jie-ji-chu-gai-nian-zong-jie/</id>
+    <published>2021-06-06T16:00:00.000Z</published>
+    <updated>2021-06-10T13:37:05.708Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Java注解基础概念总结&lt;br&gt;注解的概念&lt;/p&gt;
+&lt;p&gt;注解（Annotation），也叫元数据（Metadata），是Java5的新特性，JDK5引入了Metadata很容易的就能够调用Annotations。注解与类、接口、枚举在同一个层次，并可以应用于包、类型、构造</summary>
+        
+      
+    
+    
+    
+    <category term="技术" scheme="https://roxbl.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="注解" scheme="https://roxbl.github.io/tags/%E6%B3%A8%E8%A7%A3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JAVA日常问题答案</title>
+    <link href="https://roxbl.github.io/2021/06/06/java-ri-chang-wen-ti-da-an/"/>
+    <id>https://roxbl.github.io/2021/06/06/java-ri-chang-wen-ti-da-an/</id>
+    <published>2021-06-05T16:00:00.000Z</published>
+    <updated>2021-06-10T13:20:32.600Z</updated>
     
     
       
@@ -62,100 +175,10 @@
     
     
     
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://roxbl.github.io/2021/06/10/spring-ri-chang-wen-ti-yu-da-an/"/>
-    <id>https://roxbl.github.io/2021/06/10/spring-ri-chang-wen-ti-yu-da-an/</id>
-    <published>2021-06-10T12:04:39.000Z</published>
-    <updated>2021-06-10T12:04:40.000Z</updated>
+    <category term="技术" scheme="https://roxbl.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;Spring日常问题与答案&lt;/p&gt;
-&lt;p&gt;Spring日常问题与答案&lt;/p&gt;
-&lt;p&gt;@Accessors&lt;/p&gt;
-&lt;p&gt;@lombok&lt;/p&gt;
-&lt;p&gt;@NotBlank&lt;/p&gt;
-&lt;p&gt;@Slf4j</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://roxbl.github.io/2021/06/10/mvc-mo-shi-zhong-guan-yu-dto-ceng-de-jian-dan-shi-yong/"/>
-    <id>https://roxbl.github.io/2021/06/10/mvc-mo-shi-zhong-guan-yu-dto-ceng-de-jian-dan-shi-yong/</id>
-    <published>2021-06-10T12:04:39.000Z</published>
-    <updated>2021-06-10T12:04:40.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;mvc模式中关于DTO层的简单使用&lt;/p&gt;
-&lt;p&gt;mvc模式中关于DTO层的简单使用&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;概念：&lt;br&gt;DTO：Data Transfer</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://roxbl.github.io/2021/06/10/qian-xi-java-zhong-dto-dao-service-controller-de-si-ceng-jie-gou/"/>
-    <id>https://roxbl.github.io/2021/06/10/qian-xi-java-zhong-dto-dao-service-controller-de-si-ceng-jie-gou/</id>
-    <published>2021-06-10T12:04:39.000Z</published>
-    <updated>2021-06-10T12:04:40.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;浅析Java中dto、dao、service、controller的四层结构&lt;/p&gt;
-&lt;h1 id=&quot;浅析Java中dto、dao、service、controller的四层结构&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://roxbl.github.io/2021/06/10/zhu-jie-retention-de-zuo-yong/"/>
-    <id>https://roxbl.github.io/2021/06/10/zhu-jie-retention-de-zuo-yong/</id>
-    <published>2021-06-10T12:04:39.000Z</published>
-    <updated>2021-06-10T12:04:40.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;注解@Retention的作用&lt;/p&gt;
-&lt;p&gt;注解@Retention的作用&lt;br&gt;注解@Retention可以用来修饰注解，是注解的注解，称为元注解。&lt;br&gt;Retention注解有一个属性value，是RetentionPolicy类型的，Enum</summary>
-        
-      
-    
-    
-    
+    <category term="JAVA" scheme="https://roxbl.github.io/tags/JAVA/"/>
     
   </entry>
   
@@ -164,7 +187,7 @@
     <link href="https://roxbl.github.io/2021/06/05/welcome/"/>
     <id>https://roxbl.github.io/2021/06/05/welcome/</id>
     <published>2021-06-05T14:00:53.000Z</published>
-    <updated>2021-06-06T09:55:58.706Z</updated>
+    <updated>2021-06-10T13:12:19.647Z</updated>
     
     
       

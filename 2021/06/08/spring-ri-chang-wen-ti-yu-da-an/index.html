@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ROX">
+    <meta name="keywords" content="Spring日常问题与答案, ROX">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>ROX</title>
+    <title>Spring日常问题与答案 | ROX</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -306,7 +306,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">Spring日常问题与答案</h1>
                 </div>
             </div>
         </div>
@@ -420,12 +420,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Spring/">
+                                <span class="chip bg-color">Spring</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%8A%80%E6%9C%AF/" class="post-category">
+                                技术
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -434,7 +447,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-10
+                    2021-06-08
                 </div>
                 
 
@@ -455,45 +468,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Java注解基础概念总结</p>
-<p>Java注解基础概念总结<br>注解的概念</p>
-<p>注解（Annotation），也叫元数据（Metadata），是Java5的新特性，JDK5引入了Metadata很容易的就能够调用Annotations。注解与类、接口、枚举在同一个层次，并可以应用于包、类型、构造方法、方法、成员变量、参数、本地变量的声明中，用来对这些元素进行说明注释。</p>
-<p>注解的语法与定义形式</p>
-<p>（1）以@interface关键字定义<br>（2）注解包含成员，成员以无参数的方法的形式被声明。其方法名和返回值定义了该成员的名字和类型。<br>（3）成员赋值是通过@Annotation(name=value)的形式。<br>（4）注解需要标明注解的生命周期，注解的修饰目标等信息，这些信息是通过元注解实现。</p>
-<p>以&nbsp;java.lang.annotation 中定义的&nbsp;Target&nbsp;注解来说明：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Retention(value = RetentionPolicy.RUNTIME)</span><br><span class="line">@Target(value = { ElementType.ANNOTATION_TYPE } )</span><br><span class="line">public @interface Target {</span><br><span class="line">    ElementType[] value();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>源码分析如下：<br>第一：元注解@Retention，成员value的值为RetentionPolicy.RUNTIME。<br>第二：元注解@Target，成员value是个数组，用{}形式赋值，值为ElementType.ANNOTATION_TYPE<br>第三：成员名称为value，类型为ElementType[]<br>另外，需要注意一下，如果成员名称是value，在赋值过程中可以简写。如果成员类型为数组，但是只赋值一个元素，则也可以简写。如上面的简写形式为：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Target(ElementType.ANNOTATION_TYPE)</span><br><span class="line">public @interface Target {</span><br><span class="line">    ElementType[] value();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>注解的分类</p>
-<p>注解的分类有两种分法：</p>
-<p>第一种分法</p>
-<p>1、基本内置注解，是指Java自带的几个Annotation，如@Override、@Deprecated、@SuppressWarnings等；</p>
-<p>2、元注解（meta-annotation），是指负责注解其他注解的注解，JDK 1.5及以后版本定义了4个标准的元注解类型，如下：</p>
-<ul>
-<li>@Target</li>
-<li>@Retention</li>
-<li>@Documented</li>
-<li>@Inherited<br>3、自定义注解，根据需要可以自定义注解，自定义注解需要用到上面的meta-annotation</li>
-</ul>
-<p>第二种分法<br>注解需要标明注解的生命周期，这些信息是通过元注解 @Retention&nbsp;实现，注解的值是&nbsp;enum&nbsp;类型的&nbsp;RetentionPolicy，包括以下几种情况：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public enum RetentionPolicy {</span><br><span class="line">    /**</span><br><span class="line">     * 注解只保留在源文件，当Java文件编译成class文件的时候，注解被遗弃.</span><br><span class="line">     * 这意味着：Annotation仅存在于编译器处理期间，编译器处理完之后，该Annotation就没用了</span><br><span class="line">     */</span><br><span class="line">    SOURCE,</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * 注解被保留到class文件，但jvm加载class文件时候被遗弃，这是默认的生命周期.</span><br><span class="line">     */</span><br><span class="line">    CLASS,</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * 注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在，</span><br><span class="line">     * 保存到class对象中，可以通过反射来获取</span><br><span class="line">     */</span><br><span class="line">    RUNTIME</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>元注解</p>
-<p>如上所介绍的Java定义了4个标准的元注解：</p>
-<p>（1）@Target：用于描述注解的使用范围</p>
-<ul>
-<li>可以通过枚举类型ElementType的10个常量对象来指定</li>
-<li>TYPE，METHOD，CONSTRUCTOR，PACKAGE…..</li>
-</ul>
-<p>（2）@Retention：用于描述注解的生命周期</p>
-<ul>
-<li>可以通过枚举类型RetentionPolicy的3个常量对象来指定</li>
-<li>SOURCE（源代码）、CLASS（字节码）、RUNTIME（运行时）</li>
-<li>唯有RUNTIME阶段才能被反射读取到。</li>
-</ul>
-<p>（3）@Documented：表明这个注解应该被 javadoc工具记录。</p>
-<p>（4）@Inherited：允许子类继承父类中的注解</p>
-<hr>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/github_35180164/article/details/52107204">https://blog.csdn.net/github_35180164/article/details/52107204</a></p>
+                <p>Spring日常问题与答案</p>
+<p>@Accessors</p>
+<p>@lombok</p>
+<p>@NotBlank</p>
+<p>@Slf4j ：log日志输出，基于spring框架，或idea使用Lombok</p>
 
                 
             </div>
@@ -520,7 +499,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://ROXBL.github.io/2021/06/10/java-zhu-jie-ji-chu-gai-nian-zong-jie/">https://ROXBL.github.io/2021/06/10/java-zhu-jie-ji-chu-gai-nian-zong-jie/</a>
+                    <a href="https://ROXBL.github.io/2021/06/08/spring-ri-chang-wen-ti-yu-da-an/">https://ROXBL.github.io/2021/06/08/spring-ri-chang-wen-ti-yu-da-an/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -557,7 +536,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Spring/">
+                                    <span class="chip bg-color">Spring</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -602,18 +585,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/06/10/java-zhu-jie-ji-chu-gai-nian-zong-jie/">
+                <a href="/2021/06/09/mvc-mo-shi-zhong-guan-yu-dto-ceng-de-jian-dan-shi-yong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Java注解基础概念总结">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">Java注解基础概念总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -623,18 +605,33 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-10
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-09
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Rox
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%8A%80%E6%9C%AF/" class="post-category">
+                                    技术
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JAVA/">
+                        <span class="chip bg-color">JAVA</span>
+                    </a>
+                    
+                    <a href="/tags/MVC/">
+                        <span class="chip bg-color">MVC</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -645,13 +642,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/10/java-ri-chang-wen-ti-da-an/">
+                <a href="/2021/06/07/java-zhu-jie-ji-chu-gai-nian-zong-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Java注解基础概念总结">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">Java注解基础概念总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -662,15 +659,27 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-07
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Rox
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%8A%80%E6%9C%AF/" class="post-category">
+                                    技术
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%B3%A8%E8%A7%A3/">
+                        <span class="chip bg-color">注解</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -697,8 +706,6 @@
 
 
 <!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
 
 
     </div>
