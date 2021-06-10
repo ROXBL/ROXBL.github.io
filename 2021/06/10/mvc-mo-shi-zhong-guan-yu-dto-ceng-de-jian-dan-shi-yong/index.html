@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="WELCOME my friend, ROX">
+    <meta name="keywords" content="ROX">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>WELCOME my friend | ROX</title>
+    <title>ROX</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -301,12 +301,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">WELCOME my friend</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -420,13 +420,9 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/%E8%AF%B4%E6%98%8E/">
-                                <span class="chip bg-color">说明</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -438,7 +434,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-05
+                    2021-06-10
                 </div>
                 
 
@@ -459,10 +455,28 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="this-is-my-fist-blog-page"><a href="#this-is-my-fist-blog-page" class="headerlink" title="this is my fist blog page"></a>this is my fist blog page</h1><p><strong>welcome my friend!</strong></p>
-<p>This blog  is a project base on hexo and github. I hope through this blog open my new century.</p>
-<p>My history is your story.It maybe have a little interesting or bring.whatever hope  you can enjoy it.</p>
-<p>VENI VIDI VICI</p>
+                <p>mvc模式中关于DTO层的简单使用</p>
+<p>mvc模式中关于DTO层的简单使用</p>
+<ol>
+<li>概念：<br>DTO：Data Transfer Object，数据传输对象，起到数据封装与隔离的作用</li>
+<li>应用介绍：<br>在实际项目中，DTO的分在两层传输，一层是service层向controller层，这一层的DTO封装service执行结果，给controller，简化业务数据，只提取部分业务相关字段或补充处理相关字段，不同业务可能有不同的此类dto，具有业务相关性；</li>
+</ol>
+<p>另外一层是controller层向web前端层，这一层DTO封装controller执行结果，返回给前端web，请求返回实体封装类，适用于所有ajax请求返回的类型实体，无业务相关性</p>
+<p>实际上，第一层DTO通常会被封装进第二次DTO中，在接口调用如RPC调用中，订阅者只需要拿到简化的业务数据对象，而不用把整个实体bean给对方。<br>3. 实例：<br>service层向controller层dto：<br>例如执行秒杀业务，执行结果通常包含状态码、状态信息、执行业务id以及成功的明细数据，把分散的数据进行封装返回给controller</p>
+<p>DTO实体类：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">public class SeckillExecution {</span><br><span class="line">    private long seckillId;</span><br><span class="line"></span><br><span class="line">    //秒杀执行状态code</span><br><span class="line">    private int state;</span><br><span class="line"></span><br><span class="line">    //秒杀执行状态信息</span><br><span class="line">    private String stateInfo;</span><br><span class="line">    //不直接使用枚举来定义成员变量属性，因为传输对象以json格式给前台，默认情况下无法处理枚举类型数据</span><br><span class="line">    //private SeckillStateEnum seckillStateEnum</span><br><span class="line"></span><br><span class="line">    //秒杀成功，返回的购买明细实体</span><br><span class="line">    private SuccessKilled successKilled;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 秒杀执行成功初始化</span><br><span class="line">     * @param seckillId</span><br><span class="line">     * @param seckillStateEnum 封装状态信息的枚举常量</span><br><span class="line">     * @param successKilled</span><br><span class="line">     */</span><br><span class="line">    public SeckillExecution(long seckillId, SeckillStateEnum seckillStateEnum,SuccessKilled successKilled) {</span><br><span class="line">        super();</span><br><span class="line">        this.seckillId = seckillId;</span><br><span class="line">        this.state = seckillStateEnum.getStateCode();</span><br><span class="line">        this.stateInfo = seckillStateEnum.getStateInfo();</span><br><span class="line">        this.successKilled = successKilled;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 秒杀执行失败的初始化</span><br><span class="line">     * @param seckillId</span><br><span class="line">     * @param seckillStateEnum 封装状态信息的枚举常量</span><br><span class="line">     */</span><br><span class="line">    public SeckillExecution(long seckillId, SeckillStateEnum seckillStateEnum) {</span><br><span class="line">        super();</span><br><span class="line">        this.seckillId = seckillId;</span><br><span class="line">        this.state = seckillStateEnum.getStateCode();</span><br><span class="line">        this.stateInfo = seckillStateEnum.getStateInfo();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    setter()</span><br><span class="line">    getter()</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>service直接返回DTO对象：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public SeckillExecution executeSeckill(。。。){</span><br><span class="line">    。。。</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>而实际的业务对象是这样的：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class Seckill {</span><br><span class="line">    private long seckillId;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    private int number;</span><br><span class="line"></span><br><span class="line">    private Date startTime;</span><br><span class="line"></span><br><span class="line">    private Date endTime;</span><br><span class="line"></span><br><span class="line">    private Date createTime;</span><br><span class="line"></span><br><span class="line">    setter()</span><br><span class="line">    getter()</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>注：在RPC接口调用过程中，把DTO及接口提供给订阅者，而不用冗余的业务实体。</p>
+<p>controller层向web前端层dto：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class SeckillResult&lt;T&gt; {</span><br><span class="line">    private static final long serialVersionUID = 1L;</span><br><span class="line"></span><br><span class="line">    //注意boolean类型的getter方法，不是以get开头，而是以is开头，会影响数据封装，需手动修改</span><br><span class="line">    private boolean success;</span><br><span class="line"></span><br><span class="line">    //返回给前台的实体数据或者字符串</span><br><span class="line">    private T data;</span><br><span class="line"></span><br><span class="line">    //异常信息</span><br><span class="line">    private String error;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 数据获取失败的情况</span><br><span class="line">     * @param success</span><br><span class="line">     * @param error</span><br><span class="line">     */</span><br><span class="line">    public SeckillResult(boolean success, String error) {</span><br><span class="line">        super();</span><br><span class="line">        this.success = success;</span><br><span class="line">        this.error = error;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 数据获取成功，封装数据实体</span><br><span class="line">     * @param success</span><br><span class="line">     * @param data</span><br><span class="line">     * @param error</span><br><span class="line">     */</span><br><span class="line">    public SeckillResult(boolean success, T data) {</span><br><span class="line">        super();</span><br><span class="line">        this.success = success;</span><br><span class="line">        this.data = data;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    setter()</span><br><span class="line">    getter()    </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/javaloveiphone/article/details/52606688">https://blog.csdn.net/javaloveiphone/article/details/52606688</a></p>
 
                 
             </div>
@@ -489,7 +503,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://ROXBL.github.io/2021/06/05/welcome/">https://ROXBL.github.io/2021/06/05/welcome/</a>
+                    <a href="https://ROXBL.github.io/2021/06/10/mvc-mo-shi-zhong-guan-yu-dto-ceng-de-jian-dan-shi-yong/">https://ROXBL.github.io/2021/06/10/mvc-mo-shi-zhong-guan-yu-dto-ceng-de-jian-dan-shi-yong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -526,11 +540,7 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/%E8%AF%B4%E6%98%8E/">
-                                    <span class="chip bg-color">说明</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -579,7 +589,7 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/06/10/zhu-jie-retention-de-zuo-yong/">
+                <a href="/2021/06/10/spring-ri-chang-wen-ti-yu-da-an/">
                     <div class="card-image">
                         
                         
@@ -613,16 +623,16 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/05/welcome/">
+                <a href="/2021/06/10/qian-xi-java-zhong-dto-dao-service-controller-de-si-ceng-jie-gou/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="WELCOME my friend">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">WELCOME my friend</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -633,7 +643,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-10
                             </span>
                         <span class="publish-author">
                             
@@ -642,15 +652,6 @@
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E8%AF%B4%E6%98%8E/">
-                        <span class="chip bg-color">说明</span>
-                    </a>
-                    
                 </div>
                 
             </div>
